@@ -14,7 +14,7 @@ jobs:
           mv xtensa-esp32-elf ~/environment/esp
           echo "export PATH=\$PATH:~/environment/esp/xtensa-esp32-elf/bin" >> ~/.bash_profile
           source ~/.bash_profile
-          sudo pip ninja
+          sudo pip install ninja
           /usr/bin/python -m pip install --user -r /home/runner/AFR_ESP32_FreeRTOS_V202002.00/vendors/espressif/esp-idf/requirements.txt
           cmake -DVENDOR=espressif -DBOARD=esp32_devkitc -DCOMPILER=xtensa-esp32 -GNinja -S . -B demos/ota/build
           python vendors/espressif/esp-idf/tools/idf.py build -B demos/ota/build
