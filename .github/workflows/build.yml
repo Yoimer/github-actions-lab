@@ -5,22 +5,15 @@ jobs:
   setup-toolchain:
     runs-on: ubuntu-latest
     steps:
-      - run: sudo pip install argparse cryptography serial pyserial cmake ninja
       - run: |
           git clone https://github.com/Yoimer/AFR_ESP32_FreeRTOS_V202002.00.git ~/AFR_ESP32_FreeRTOS_V202002.00
-          pwd
           cd ~/AFR_ESP32_FreeRTOS_V202002.00
-          sudo pip install argparse cryptography serial pyserial cmake ninja
           wget https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz -P ~/
           tar -xvzf ~/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
           mkdir -p ~/environment/esp
           mv xtensa-esp32-elf ~/environment/esp
           echo "export PATH=\$PATH:~/environment/esp/xtensa-esp32-elf/bin" >> ~/.bash_profile
           source ~/.bash_profile
-          cat ~/.bash_profile
-          pwd
           /usr/bin/python -m pip install --user -r /home/runner/AFR_ESP32_FreeRTOS_V202002.00/vendors/espressif/esp-idf/requirements.txt
           cmake -DVENDOR=espressif -DBOARD=esp32_devkitc -DCOMPILER=xtensa-esp32 -GNinja -S . -B demos/ota/build
-          sudo pip uninstall serial -y
-          sudo pip install pyserial
           python vendors/espressif/esp-idf/tools/idf.py build -B demos/ota/build
